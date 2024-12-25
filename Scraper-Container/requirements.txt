@@ -1,0 +1,7 @@
+#Dependencies for webscraper
+
+requests==2.32.3
+
+bs4==0.0.2
+
+psycopg2==2.9.10 #We might not even need this. Could be useful for connecting PGSQL deployment.
