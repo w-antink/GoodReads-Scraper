@@ -1,5 +1,5 @@
 # GoodReads-Scraper
-Python Script that takes your GoodReads account data and exports your reads. Optionally will generate a dashboard.
+Project uses GoodReads login credentials to scrape reading/book data for export. Optionally will generate a dashboard.
 
 # Information Sought
 -Title
