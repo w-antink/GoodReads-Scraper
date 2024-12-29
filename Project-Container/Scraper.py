@@ -3,12 +3,21 @@ import selenium # type: ignore
 import re #Necessary for the conv_names function
 import time
 import json
+import configparser
 from selenium import webdriver  
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 #=========================================
+
+try:
+    username = config['credentials']['username']
+    password = config['credentials']['password']
+    print(f'Username: {username}')
+    print(f'Password: {password}')
+except:
+     print('Fuh nah')
 
 #SCRAPER==================================    
 options = Options()
@@ -52,10 +61,17 @@ def scrape_book(driver, type): #Grabs all of the data from a given book's page.
 def run_scraper(driver):
     driver.get('https://www.goodreads.com/ap/signin?language=en_US&openid.assoc_handle=amzn_goodreads_web_na&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.goodreads.com%2Fap-handler%2Fsign-in&siteState=eyJyZXR1cm5fdXJsIjoiaHR0cHM6Ly93d3cuZ29vZHJlYWRzLmNvbS8ifQ%3D%3D')
     
+
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    username = str(config['credentials']['username'])
+    password = str(config['credentials']['password'])
+
     #Enter login credentials (Need to adjust so multiple attempts possible.)
+    driver.find_element(By.ID, 'ap_email').send_keys(f'{username}')
+    driver.find_element(By.ID, 'ap_password').send_keys(f'{password}')
     try:
-        driver.find_element(By.ID, 'ap_email').send_keys(f'{input("What's your username?\n")}')
-        driver.find_element(By.ID, 'ap_password').send_keys(f'{input("What's your password?\n")}')
+        
         driver.find_element(By.ID, 'signInSubmit').click()
     except:
         print("\nSorry, something went wrong.\n")
