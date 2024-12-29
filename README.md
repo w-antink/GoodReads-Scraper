@@ -22,3 +22,4 @@ Project uses GoodReads login credentials to scrape reading/book data for export.
 -Bulk Export
 -Query/Filtered Export
 -Notification of Upcoming Publications
+-Reading Dashboard
