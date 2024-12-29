@@ -63,21 +63,22 @@ def run_scraper(driver):
     driver.get('https://www.goodreads.com/ap/signin?language=en_US&openid.assoc_handle=amzn_goodreads_web_na&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.goodreads.com%2Fap-handler%2Fsign-in&siteState=eyJyZXR1cm5fdXJsIjoiaHR0cHM6Ly93d3cuZ29vZHJlYWRzLmNvbS8ifQ%3D%3D')
     
     try: #Try to get credentials from config.ini
-        
+
         if 'credentials' in config and 'username' in config['credentials'] and 'password' in config['credentials']:
             username = str(config['credentials']['username'])
             password = str(config['credentials']['password'])
             print("Credentials loaded from config.ini.")
         else: #If credentials are not in the config, prompt the user for input
+            #Need to make it so they can actually do this. Need to adjust so multiple attempts possible.
             print("Credentials not found in config.ini. Please enter them manually. If you don't know how to do this, reach out to me.")
     except:
         pass
 
-    #Enter login credentials (Need to adjust so multiple attempts possible.)
-    driver.find_element(By.ID, 'ap_email').send_keys(f'{username}')
-    driver.find_element(By.ID, 'ap_password').send_keys(f'{password}')
+
     try:
-        
+        #Pass in login credentials
+        driver.find_element(By.ID, 'ap_email').send_keys(f'{username}')
+        driver.find_element(By.ID, 'ap_password').send_keys(f'{password}')
         driver.find_element(By.ID, 'signInSubmit').click()
     except:
         print("\nSorry, something went wrong.\n")
