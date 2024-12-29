@@ -15,7 +15,6 @@ options = Options()
 options.headless = False  # don't trust the user to not mess with the slides
 driver = webdriver.Firefox()
 
-
 def scrape_book(driver, type): #Grabs all of the data from a given book's page.
 
     title = driver.find_element(By.CLASS_NAME, 'Text__title1').text
@@ -41,8 +40,8 @@ def scrape_book(driver, type): #Grabs all of the data from a given book's page.
     print(publish_date)
 
     try:
-        series = (driver.find_element(By.CLASS_NAME, 'Text__title3').text).split("in the")[-1].strip().rsplit("series", 1)[0].strip()
-        number_in_series = int((driver.find_element(By.CLASS_NAME, 'Text__title3').text).split()[1])
+        series = (driver.find_element(By.CLASS_NAME, 'Text__title3').text).split('#')[0].strip()
+        number_in_series = int(re.search(r'#(\d+)', driver.find_element(By.CLASS_NAME, 'Text__title3').text).group(1))
         print(series, number_in_series)
     except:
         pass
@@ -61,11 +60,32 @@ def run_scraper(driver):
     except:
         print("\nSorry, something went wrong.\n")
     
-    #Scraping shelf contents
+    #Iterate through shelves
     shelf_types = ['read', 'currently-reading', 'to-read']
     for type in shelf_types:
         driver.get(f'https://www.goodreads.com/review/list/102007809-jeannette-antink?shelf={type}')
+        time.sleep(0.1)
         print(f'Scraping for {type}')
+        p=1
+        while True:
+            try:       
+                #Iterate through books with url builder.
+                book_links = [book.find_element(By.CSS_SELECTOR, "a[href]").get_attribute("href") for book in driver.find_elements(By.CLASS_NAME, 'bookalike')]
+                print(f'Captured {len(book_links)} titles')
+                
+                if len(book_links) == 0:
+                            print('No more books found, ending scrape.')
+                            switch = False
+                            break
+
+                for link in book_links:
+                    driver.get(link)
+                    scrape_book(driver, type)
+                driver.get(f'https://www.goodreads.com/review/list/102007809-jeannette-antink?page={p}&shelf=read')
+            
+            except:
+                switch = False
+
 
     
 
