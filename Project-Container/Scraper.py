@@ -11,13 +11,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 #=========================================
 
-try:
-    username = config['credentials']['username']
-    password = config['credentials']['password']
-    print(f'Username: {username}')
-    print(f'Password: {password}')
-except:
-     print('Fuh nah')
+import os
+print("Current working directory:", os.getcwd())
+print("Files in the current directory:", os.listdir())
 
 #SCRAPER==================================    
 options = Options()
