@@ -23,3 +23,10 @@ Project uses GoodReads login credentials to scrape reading/book data for export.
 -Query/Filtered Export
 -Notification of Upcoming Publications
 -Reading Dashboard
+
+# CODE TO-DO
+>Get dependencies established and updated in requirements.txt
+>Get scraper to build spreadsheet
+>Allow for manual credential entry (Currently only accepts from config file)
+>Figure out best option to build interface
+
