@@ -11,9 +11,30 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
 #=========================================
 
-import os
-print("Current working directory:", os.getcwd())
-print("Files in the current directory:", os.listdir())
+import configparser
+
+# Create the config parser and read the config file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+try:
+    # Access credentials from config
+    username = config['credentials']['username']
+    password = config['credentials']['password']
+
+    # Print them to verify
+    print(f'Username: {username}')
+    print(f'Password: {password}')
+
+    # Check for extra quotes and remove them if present
+    username = username.strip('"')
+    password = password.strip('"')
+
+    print(f'Cleaned Username: {username}')
+    print(f'Cleaned Password: {password}')
+
+except KeyError as e:
+    print(f'Error: {e} not found in config.ini')
 
 #SCRAPER==================================    
 options = Options()
