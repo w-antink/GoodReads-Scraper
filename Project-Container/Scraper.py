@@ -9,6 +9,8 @@ from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Keys
+import requests
+from bs4 import BeautifulSoup
 #=========================================
 
 #SCRAPER==================================    
