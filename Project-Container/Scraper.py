@@ -24,9 +24,15 @@ config.read('config.ini')
 
 def scrape_book(driver, type): #Grabs all of the data from a given book's page.
 
-    title = driver.find_element(By.CLASS_NAME, 'Text__title1').text
+    link = 'https://www.goodreads.com/book/show/42135029-city-of-girls'
+    page = requests.get(link, headers={"User-Agent": "Mozilla/5.0"})
+    soup = BeautifulSoup(page.content, "html.parser")
     
+    #results = soup.find(id="content-container")
+    recipe_cards = results.find_all("div", class_="cell small-6 medium-3 large-2")
 
+    title = soup.find("h1", class_="Text__title1").get_text(strip=True)
+    print(title)
     #Grabs just the author name. Very dirty and not built for edge cases yet.
     authors = []
     for auth_element in driver.find_elements(By.CLASS_NAME, 'ContributorLink__name'):
@@ -104,7 +110,6 @@ def run_scraper(driver):
                 
                 if len(book_links) == 0:
                             print('No more books found, ending scrape.')
-                            switch = False
                             break
 
                 for link in book_links:
