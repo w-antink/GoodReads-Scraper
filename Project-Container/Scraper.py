@@ -4,7 +4,7 @@ import re #Necessary for the conv_names function
 import time
 import json
 import configparser
-from selenium import webdriver  
+from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
@@ -28,20 +28,21 @@ def scrape_book(driver, type): #Grabs all of the data from a given book's page.
     page = requests.get(link, headers={"User-Agent": "Mozilla/5.0"})
     soup = BeautifulSoup(page.content, "html.parser")
     
+    #Vestigial bs4
     #results = soup.find(id="content-container")
-    recipe_cards = results.find_all("div", class_="cell small-6 medium-3 large-2")
+    #recipe_cards = results.find_all("div", class_="cell small-6 medium-3 large-2")
 
-    title = soup.find("h1", class_="Text__title1").get_text(strip=True)
+    title = soup.find("h1", class_="Text__title1").get_text(strip=True) # Rewrite for bs4
     print(title)
     #Grabs just the author name. Very dirty and not built for edge cases yet.
     authors = []
     for auth_element in driver.find_elements(By.CLASS_NAME, 'ContributorLink__name'):
         authors.append(auth_element.text)
         
-    author = authors[0]
+    author = authors[0] # Rewrite for bs4
     
 
-    addtl_authors = authors[1:-1]
+    addtl_authors = authors[1:-1] # Rewrite for bs4
     
 
     shelf_location = type
