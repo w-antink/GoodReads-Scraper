@@ -33,7 +33,7 @@ def scrape_book(driver, type): #Grabs all of the data from a given book's page.
     #recipe_cards = results.find_all("div", class_="cell small-6 medium-3 large-2")
 
     title = soup.find("h1", class_="Text__title1").get_text(strip=True) # Rewrite for bs4
-    print(title)
+ 
     #Grabs just the author name. Very dirty and not built for edge cases yet.
     authors = []
     for auth_element in driver.find_elements(By.CLASS_NAME, 'ContributorLink__name'):
